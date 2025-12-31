@@ -1,0 +1,2 @@
+31-12-25: 
+    S: started creating the pipeline. removed unnecessary folders. 
