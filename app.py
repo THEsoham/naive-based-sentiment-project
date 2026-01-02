@@ -18,15 +18,17 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def main():
-    with st.sidebar:
-        st.header("⚙️ System Control")
-        # --- ADD TEAM NAMES HERE ---
-        st.subheader("👥 Project Team")
-        st.markdown("""
-        * **Namrata Pathak**
-        * **Soham Guha**
-        """)
-        st.divider()
+    # 1. Header Section
+    col_head, col_logo = st.columns([4, 1])
+    with col_head:
+        st.title("🧠 Agentic Sentiment Intelligence")
+        
+        # --- PASTE YOUR TEAM NAMES HERE ---
+        st.markdown("Developed by: **Namrata Pathak**, **Soham Guha**")
+        
+        st.caption("Multi-agent system for deep linguistic analysis and sentiment scoring.")
+    
+    st.divider()
     
     # Header Section
     col_head, col_logo = st.columns([4, 1])
