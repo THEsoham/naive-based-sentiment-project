@@ -10,7 +10,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# 2. Custom Styling for a Professional Look
+# 2. Custom Styling
 st.markdown("""
     <style>
     .stMetric { background-color: #1e2130; padding: 15px; border-radius: 10px; border: 1px solid #3e4452; }
@@ -18,22 +18,12 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def main():
-    # 1. Header Section
+    # 1. Header Section (Cleaned up duplicates)
     col_head, col_logo = st.columns([4, 1])
     with col_head:
         st.title("🧠 Agentic Sentiment Intelligence")
-        
-        # --- PASTE YOUR TEAM NAMES HERE ---
+        # Your Names
         st.markdown("Developed by: **Namrata Pathak**, **Soham Guha**")
-        
-        st.caption("Multi-agent system for deep linguistic analysis and sentiment scoring.")
-    
-    st.divider()
-    
-    # Header Section
-    col_head, col_logo = st.columns([4, 1])
-    with col_head:
-        st.title("🧠 Agentic Sentiment Intelligence")
         st.caption("Multi-agent system for deep linguistic analysis and sentiment scoring.")
     
     st.divider()
@@ -42,7 +32,6 @@ def main():
     with st.sidebar:
         st.header("⚙️ System Control")
         st.info("Status: **System Operational**")
-        # This threshold can be passed to the Strategy Agent later
         confidence_threshold = st.slider("Confidence Threshold", 0.0, 1.0, 0.7)
         st.divider()
         if st.button("🧹 Clear Session"):
@@ -62,14 +51,12 @@ def main():
             st.error("⚠️ Action Required: Please provide a file or text input.")
         else:
             with st.status("🤖 Agents Coordinating...", expanded=True) as status:
-                # Initialize your actual Orchestrator
                 orchestrator = AgenticOrchestrator()
                 
                 st.write("🔍 **Data Agent**: Pre-processing and cleaning input...")
-                # The orchestrator handles the file and text internally now
                 result = orchestrator.run_logic(uploaded_file, user_sentence)
                 
-                time.sleep(0.5) # Brief pause for UI smoothness
+                time.sleep(0.5) 
                 status.update(label="✅ Analysis Complete!", state="complete", expanded=False)
 
             # 6. Results Visualization
@@ -79,7 +66,6 @@ def main():
             with res_col1:
                 st.metric("Final Sentiment", result["prediction"].upper())
             with res_col2:
-                # Format confidence as a percentage
                 st.metric("Confidence Score", f"{result['confidence']*100:.1f}%")
             with res_col3:
                 sentiment_color = "🟢" if result["prediction"].lower() == "pos" else "🔴"
@@ -94,7 +80,6 @@ def main():
                 })
 
 if __name__ == "__main__":
-    # Ensure directories exist
     for folder in ["data/raw", "data/processed", "data/models"]:
         os.makedirs(folder, exist_ok=True)
     main()
