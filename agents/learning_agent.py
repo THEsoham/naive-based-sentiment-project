@@ -1,25 +1,25 @@
-import math
+import json
+import os
 
 class LearningAgent:
-    def get_log_likelihoods(self, feature_agent, tokens):
-        """Calculates probabilities using Laplace smoothing (Blueprint 5.4)."""
-        words = tokens.split()
-        v_size = len(feature_agent.vocab)
-        
-        # Start with log(0.5) for priors (neutral starting point)
-        pos_score = math.log(0.5)
-        neg_score = math.log(0.5)
-        
-        for word in words:
-            # Laplace Smoothing: (count + 1) / (total_words + vocab_size)
-            # Probability of word given Positive
-            pos_count = feature_agent.pos_word_counts[word]
-            p_w_pos = (pos_count + 1) / (feature_agent.pos_total_count + v_size)
-            pos_score += math.log(p_w_pos)
-            
-            # Probability of word given Negative
-            neg_count = feature_agent.neg_word_counts[word]
-            p_w_neg = (neg_count + 1) / (feature_agent.neg_total_count + v_size)
-            neg_score += math.log(p_w_neg)
-            
-        return {"positive": pos_score, "negative": neg_score}
+    def __init__(self, model_path="data/models/weights.json"):
+        self.model_path = model_path
+        self.vocab = {}  # {word: {pos: count, neg: count}}
+        self.class_counts = {"pos": 0, "neg": 0}
+        self.load_model()
+
+    def load_model(self):
+        if os.path.exists(self.model_path):
+            with open(self.model_path, 'r') as f:
+                data = json.load(f)
+                self.vocab = data['vocab']
+                self.class_counts = data['counts']
+
+    def save_model(self):
+        with open(self.model_path, 'w') as f:
+            json.dump({'vocab': self.vocab, 'counts': self.class_counts}, f)
+
+    def train_incremental(self, text, label):
+        # Update your Naive Bayes dictionaries here
+        # ... (your existing logic) ...
+        self.save_model() # Save after learning
