@@ -18,6 +18,16 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 def main():
+    with st.sidebar:
+        st.header("⚙️ System Control")
+        # --- ADD TEAM NAMES HERE ---
+        st.subheader("👥 Project Team")
+        st.markdown("""
+        * **Namrata Pathak**
+        * **Soham Guha**
+        """)
+        st.divider()
+    
     # Header Section
     col_head, col_logo = st.columns([4, 1])
     with col_head:
